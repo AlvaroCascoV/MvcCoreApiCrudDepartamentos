@@ -1,0 +1,37 @@
+﻿@model MvcCoreApiCrudDepartamentos.Models.Departamento
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Departamento</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Model.IdDepartamento
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.IdDepartamento
+        </dd>
+        <dt class = "col-sm-2">
+            @Model.Nombre
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Nombre
+        </dd>
+        <dt class = "col-sm-2">
+            @Model.Localidad
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Localidad
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-controller="Departamentos" asp-route-id="@Model.IdDepartamento" class="btn btn-warning">Edit</a>
+    <a asp-action="Delete" asp-controller="Departamentos" asp-route-id="@Model.IdDepartamento" class="btn btn-danger">Delete</a>
+    <a asp-action="Index" asp-controller="Departamentos" class="btn btn-info">Back to List</a>
+</div>
