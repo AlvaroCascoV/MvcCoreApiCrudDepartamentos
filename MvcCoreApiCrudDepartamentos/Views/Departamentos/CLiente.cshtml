@@ -1,0 +1,144 @@
+﻿@section Scripts {
+    <script src="~/js/serviceapidepartamentos.js"></script>
+    <script>
+        // let url = "https://apicorecruddepartamentosacv.azurewebsites.net/";
+        $(document).ready(function () {
+            loadDepartamentos();
+            $("#botoninsert").click(function () {
+                let id = parseInt($("#cajaid").val());
+                let nombre = $("#cajanombre").val();
+                let localidad = $("#cajalocalidad").val();
+
+                createDepartamentoAsync(id, nombre, localidad, function(){
+                    loadDepartamentos()
+                });
+
+                // let dept = new Object();
+                // dept.idDepartamento = parseInt(id);
+                // dept.nombre = nombre;
+                // dept.localidad = localidad;
+                // var json = JSON.stringify(dept);
+
+                // let request = "api/departamentos";
+                // $.ajax({
+                //     url: url + request,
+                //     type: "POST",
+                //     data: json,
+                //     contentType: "application/json",
+                //     success: function (data) {
+                //         console.log("insertado...");
+                //         loadDepartamentos();
+                //     }
+                // });
+            });
+            $("#botonupdate").click(function () {
+                let id = parseInt($("#cajaid").val());
+                let nombre = $("#cajanombre").val();
+                let localidad = $("#cajalocalidad").val();
+                
+                updateDepartamentoAsync(id, nombre, localidad, function(){
+                    loadDepartamentos()
+                });
+
+                // let dept = new Object();
+                // dept.idDepartamento = parseInt(id);
+                // dept.nombre = nombre;
+                // dept.localidad = localidad;
+                // var json = JSON.stringify(dept);
+
+                // let request = "api/departamentos";
+                // $.ajax({
+                //     url: url + request,
+                //     type: "PUT",
+                //     data: json,
+                //     contentType: "application/json",
+                //     success: function (data) {
+                //         console.log("actualizado...");
+                //         loadDepartamentos();
+                //     }
+                // });
+            });
+            $("#botondelete").click(function () {
+                let id = parseInt($("#cajaid").val());
+
+                deleteDepartamentoAsync(id, function(){
+                    loadDepartamentos();
+                });
+
+                // let request = "api/departamentos/" + id;
+                // $.ajax({
+                //     url: url + request,
+                //     type: "DELETE",
+                //     success: function (data) {
+                //         console.log("borrado...");
+                //         loadDepartamentos();
+                //     }
+                // });
+            });
+        })
+
+        //separo la llamada a la api ("getDepartamentosAsync") del dibujo
+        //por si en otro sitio quiero dibujar los mismos datos de otra manera
+        function loadDepartamentos() {
+            getDepartamentosAsync(function(data) {
+                var html = "";
+                $.each(data, function (index, departamento) {
+                    html += "<tr>";
+                    html += "<td>" + departamento.idDepartamento + "</td>";
+                    html += "<td>" + departamento.nombre + "</td>";
+                    html += "<td>" + departamento.localidad + "</td>";
+                    html += "</tr>";
+                });
+                $("#tabladepartamentos tbody").html(html);
+            });
+
+            // let request = "api/departamentos";
+            // $.ajax({
+            //     url: url + request,
+            //     type: "GET",
+            //     dataType: "json",
+            //     success: function (data) {
+            //         console.log("leyendo...");
+            //         var html = "";
+            //         $.each(data, function (index, departamento) {
+            //             html += "<tr>";
+            //             html += "<td>" + departamento.idDepartamento + "</td>";
+            //             html += "<td>" + departamento.nombre + "</td>";
+            //             html += "<td>" + departamento.localidad + "</td";
+            //             html += "</tr>";
+            //         });
+            //         $("#tabladepartamentos tbody").html(html);
+            //     }
+            // });
+        }
+
+    </script>
+}
+
+<h1>Api Departamentos Client</h1>
+
+<form>
+    <label>Id departamento</label>
+    <input type="text" id="cajaid" class="form-control"/>
+
+    <label>Nombre</label>
+    <input type="text" id="cajanombre" class="form-control" />
+
+    <label>Localidad</label>
+    <input type="text" id="cajalocalidad" class="form-control" />
+
+    <button type="button" id="botoninsert" class="btn btn-success">Insertar</button>
+    <button type="button" id="botonupdate" class="btn btn-warning">Update</button>
+    <button type="button" id="botondelete" class="btn btn-danger">Delete</button>
+</form>
+
+<table id="tabladepartamentos" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Localidad</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table></table>
